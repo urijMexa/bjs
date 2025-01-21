@@ -1,5 +1,6 @@
 "use strict";
 
+// Функция для решения квадратного уравнения
 function solveEquation(a, b, c) {
   const discriminant = b ** 2 - 4 * a * c;
 
@@ -15,6 +16,7 @@ function solveEquation(a, b, c) {
   }
 }
 
+// Функция для расчёта ипотеки
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
   // Проверка входных данных
   if (typeof percent !== 'number' || percent < 0) {
@@ -52,4 +54,14 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
 }
 
 // Пример использования:
-console.log(calculateTotalMortgage(10, 0, 50000, 12)); // Пример вызова функции
+console.log(solveEquation(1, -3, 2)); // [2, 1]
+console.log(solveEquation(1, 2, 1));  // [-1]
+console.log(solveEquation(1, 2, 3));  // []
+
+console.log(calculateTotalMortgage(10, 0, 50000, 12)); // Ожидается: 52749.53
+console.log(calculateTotalMortgage(10, 1000, 50000, 12)); // Ожидается: 51694.54
+console.log(calculateTotalMortgage(10, 0, 20000, 24)); // Ожидается: 22149.56
+console.log(calculateTotalMortgage(10, 1000, 20000, 24)); // Ожидается: 21042.09
+console.log(calculateTotalMortgage(10, 20000, 20000, 24)); // Ожидается: 0
+console.log(calculateTotalMortgage(10, 0, 10000, 36)); // Ожидается: 11616.19
+console.log(calculateTotalMortgage(15, 0, 10000, 36)); // Ожидается: 12479.52
