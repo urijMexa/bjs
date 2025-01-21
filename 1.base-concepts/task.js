@@ -15,11 +15,13 @@ function solveEquation(a, b, c) {
   }
 }
 
+"use strict";
+
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  // Преобразуем процентную ставку в диапазон от 0 до 1 и в месячную ставку
+  // Преобразуем процентную ставку из диапазона 0–100 в диапазон 0–1 и в месячную ставку
   const monthlyPercent = (percent / 100) / 12;
 
-  // Рассчитываем тело кредита
+  // Рассчитываем тело кредита (сумма, которую нужно вернуть банку)
   const loanBody = amount - contribution;
 
   // Если тело кредита меньше или равно нулю, возвращаем 0
@@ -27,11 +29,11 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
     return 0;
   }
 
-  // Рассчитываем ежемесячный платёж
-  const monthlyPayment = loanBody * (monthlyPercent / (1 - (1 + monthlyPercent) ** (-countMonths)));
+  // Рассчитываем ежемесячный платёж по формуле аннуитетного платежа
+  const monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / (((1 + monthlyPercent) ** countMonths) - 1)));
 
-  // Рассчитываем общую сумму выплат
-  const totalAmount = (monthlyPayment * countMonths);
+  // Рассчитываем общую сумму, которую заплатит клиент
+  const totalAmount = monthlyPayment * countMonths;
 
   // Округляем результат до двух знаков после запятой
   return parseFloat(totalAmount.toFixed(2));
