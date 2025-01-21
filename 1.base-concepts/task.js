@@ -15,8 +15,6 @@ function solveEquation(a, b, c) {
   }
 }
 
-"use strict";
-
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
   // Преобразуем процентную ставку из диапазона 0–100 в диапазон 0–1 и в месячную ставку
   const monthlyPercent = (percent / 100) / 12;
@@ -30,7 +28,7 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
   }
 
   // Рассчитываем ежемесячный платёж по формуле аннуитетного платежа
-  const monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / (((1 + monthlyPercent) ** countMonths) - 1)));
+  const monthlyPayment = loanBody * (monthlyPercent / (1 - (1 + monthlyPercent) ** (-countMonths)));
 
   // Рассчитываем общую сумму, которую заплатит клиент
   const totalAmount = monthlyPayment * countMonths;
@@ -38,11 +36,3 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
   // Округляем результат до двух знаков после запятой
   return parseFloat(totalAmount.toFixed(2));
 }
-
-console.log(calculateTotalMortgage(10, 0, 50000, 12)); // Ожидается: 52749.53
-console.log(calculateTotalMortgage(10, 1000, 50000, 12)); // Ожидается: 51694.54
-console.log(calculateTotalMortgage(10, 0, 20000, 24)); // Ожидается: 22149.56
-console.log(calculateTotalMortgage(10, 1000, 20000, 24)); // Ожидается: 21042.09
-console.log(calculateTotalMortgage(10, 20000, 20000, 24)); // Ожидается: 0
-console.log(calculateTotalMortgage(10, 0, 10000, 36)); // Ожидается: 11616.19
-console.log(calculateTotalMortgage(15, 0, 10000, 36)); // Ожидается: 12479.52
