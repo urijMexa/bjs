@@ -22,13 +22,13 @@ function calculateTotalMortgage(percent, contribution, amount, countMonths) {
   // Рассчитываем тело кредита
   const loanBody = amount - contribution;
 
-  // Если тело кредита равно нулю, возвращаем 0
+  // Если тело кредита меньше или равно нулю, возвращаем 0
   if (loanBody <= 0) {
     return 0;
   }
 
   // Рассчитываем ежемесячный платёж
-  const monthlyPayment = loanBody * (monthlyPercent + (monthlyPercent / (((1 + monthlyPercent) ** countMonths) - 1)));
+  const monthlyPayment = loanBody * (monthlyPercent / (1 - (1 + monthlyPercent) ** (-countMonths)));
 
   // Рассчитываем общую сумму выплат
   const totalAmount = (monthlyPayment * countMonths) + contribution;
