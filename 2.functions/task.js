@@ -30,48 +30,46 @@ console.log(getArrayParams(5)); // { min: 5, max: 5, avg: 5 }
 
 // Функция для суммирования элементов
 function summElementsWorker(...arr) {
-  if (arr.length === 0) return 0; // Если массив пуст, возвращаем 0
-  return arr.reduce((sum, current) => sum + current, 0); // Суммируем элементы
+  if (arr.length === 0) return 0;
+  return arr.reduce((sum, current) => sum + current, 0);
 }
 
 // Функция для вычисления разницы между максимальным и минимальным элементами
 function differenceMaxMinWorker(...arr) {
-  if (arr.length === 0) return 0; // Если массив пуст, возвращаем 0
-  const max = Math.max(...arr); // Находим максимальный элемент
-  const min = Math.min(...arr); // Находим минимальный элемент
-  return max - min; // Возвращаем разницу
+  if (arr.length === 0) return 0;
+  const max = Math.max(...arr);
+  const min = Math.min(...arr);
+  return max - min;
 }
 
 // Функция для вычисления разницы сумм чётных и нечётных элементов
 function differenceEvenOddWorker(...arr) {
-  if (arr.length === 0) return 0; // Если массив пуст, возвращаем 0
-  let sumEvenElement = 0; // Сумма чётных элементов
-  let sumOddElement = 0; // Сумма нечётных элементов
+  if (arr.length === 0) return 0;
+  let sumEvenElement = 0;
+  let sumOddElement = 0;
   for (let num of arr) {
     if (num % 2 === 0) {
-      sumEvenElement += num; // Если элемент чётный, добавляем к sumEvenElement
+      sumEvenElement += num;
     } else {
-      sumOddElement += num; // Если элемент нечётный, добавляем к sumOddElement
+      sumOddElement += num;
     }
   }
-  return sumEvenElement - sumOddElement; // Возвращаем разницу
+  return sumEvenElement - sumOddElement;
 }
 
-// Функция для вычисления среднего значения чётных элементов
 function averageEvenElementsWorker(...arr) {
-  if (arr.length === 0) return 0; // Если массив пуст, возвращаем 0
-  let sumEvenElement = 0; // Сумма чётных элементов
-  let countEvenElement = 0; // Количество чётных элементов
+  if (arr.length === 0) return 0;
+  let sumEvenElement = 0;
+  let countEvenElement = 0;
   for (let num of arr) {
     if (num % 2 === 0) {
-      sumEvenElement += num; // Если элемент чётный, добавляем к sumEvenElement
-      countEvenElement++; // Увеличиваем счётчик чётных элементов
+      sumEvenElement += num;
+      countEvenElement++;
     }
   }
-  return countEvenElement === 0 ? 0 : sumEvenElement / countEvenElement; // Возвращаем среднее значение
+  return countEvenElement === 0 ? 0 : sumEvenElement / countEvenElement;
 }
 
-// Примеры использования:
 console.log(summElementsWorker()); // 0
 console.log(summElementsWorker(10, 10, 11, 20, 10)); // 61
 
@@ -85,7 +83,6 @@ console.log(averageEvenElementsWorker(1, 2, 3, 4, 5, 6, 7, 8, 9)); // 5
 console.log(averageEvenElementsWorker(15, 97, 85, 64, 67, 10, 69, 40, 15, 35)); // 38
 
 // Функция-агрегатор для нахождения максимального результата насадки
-// Глобальное объявление функции makeWork
 function makeWork(arrOfArr, func) {
   if (arrOfArr.length === 0) return 0;
 
