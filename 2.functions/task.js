@@ -85,32 +85,41 @@ console.log(averageEvenElementsWorker(1, 2, 3, 4, 5, 6, 7, 8, 9)); // 5
 console.log(averageEvenElementsWorker(15, 97, 85, 64, 67, 10, 69, 40, 15, 35)); // 38
 
 // Функция-агрегатор для нахождения максимального результата насадки
+// Глобальное объявление функции makeWork
 function makeWork(arrOfArr, func) {
-  let maxWorkerResult = -Infinity; // Инициализируем переменную для хранения максимального результата
+  if (arrOfArr.length === 0) return 0;
 
-  // Перебираем каждый подмассив в arrOfArr
-  for (let arr of arrOfArr) {
-    // Применяем функцию-насадку к текущему подмассиву
-    const result = func(...arr);
+  let maxWorkerResult = -Infinity;
 
-    // Если результат больше текущего максимума, обновляем максимум
+  for (let subArray of arrOfArr) {
+    const result = func(...subArray);
     if (result > maxWorkerResult) {
       maxWorkerResult = result;
     }
   }
 
-  return maxWorkerResult; // Возвращаем максимальный результат
+  return maxWorkerResult;
 }
 
-// Примеры использования:
-const arr = [
-  [10, 10, 11, 20, 10],
-  [67, 10, 2, 39, 88],
-  [72, 75, 51, 87, 43],
-  [30, 41, 55, 96, 62],
-];
+// Тесты
+describe('Домашнее задание к занятию 2 Функции', function () {
+  it('Насадка суммирования значений', function () {
+    const arr = [[10, 10, 11, 20, 10], [67, 10, 2, 39, 88]];
+    expect(makeWork(arr, summElementsWorker)).toBe(328);
+  });
 
-console.log(makeWork(arr, summElementsWorker)); // максимум из 61, 206, 328, 284 => 328
-console.log(makeWork(arr, differenceMaxMinWorker)); // максимум из 10, 86, 44, 66 => 86
-console.log(makeWork(arr, differenceEvenOddWorker)); // максимум из 39, -6, -184, 92 => 92
-console.log(makeWork(arr, averageEvenElementsWorker)); // максимум из 12.5, 33.333, 72, 62.666 => 72
+  it('Насадка разницы элементов', function () {
+    const arr = [[10, 10, 11, 20, 10], [67, 10, 2, 39, 88]];
+    expect(makeWork(arr, differenceMaxMinWorker)).toBe(86);
+  });
+
+  it('Насадка разницы чётных и нечётных элементов', function () {
+    const arr = [[10, 10, 11, 20, 10], [67, 10, 2, 39, 88]];
+    expect(makeWork(arr, differenceEvenOddWorker)).toBe(92);
+  });
+
+  it('Насадка среднего значения чётных элементов', function () {
+    const arr = [[10, 10, 11, 20, 10], [67, 10, 2, 39, 88]];
+    expect(makeWork(arr, averageEvenElementsWorker)).toBe(72);
+  });
+});
