@@ -84,27 +84,30 @@ console.log(differenceEvenOddWorker(15, 97, 85, 64, 67, 10, 69, 40, 15, 35)); //
 console.log(averageEvenElementsWorker(1, 2, 3, 4, 5, 6, 7, 8, 9)); // 5
 console.log(averageEvenElementsWorker(15, 97, 85, 64, 67, 10, 69, 40, 15, 35)); // 38
 
+// Функция-агрегатор для нахождения максимального результата насадки
 function makeWork(arrOfArr, func) {
-  if (arrOfArr.length === 0) return 0; // Если массив пуст, возвращаем 0
+  let maxWorkerResult = -Infinity; // Инициализируем переменную для хранения максимального результата
 
-  let maxWorkerResult = -Infinity; // Инициализируем начальное значение как минимальное возможное число
+  // Перебираем каждый подмассив в arrOfArr
+  for (let arr of arrOfArr) {
+    // Применяем функцию-насадку к текущему подмассиву
+    const result = func(...arr);
 
-  for (let subArray of arrOfArr) {
-    const result = func(...subArray); // Применяем функцию-насадку к каждому подмассиву
+    // Если результат больше текущего максимума, обновляем максимум
     if (result > maxWorkerResult) {
-      maxWorkerResult = result; // Обновляем максимум, если текущий результат больше
+      maxWorkerResult = result;
     }
   }
 
   return maxWorkerResult; // Возвращаем максимальный результат
 }
 
-// Пример использования:
+// Примеры использования:
 const arr = [
   [10, 10, 11, 20, 10],
   [67, 10, 2, 39, 88],
   [72, 75, 51, 87, 43],
-  [30, 41, 55, 96, 62]
+  [30, 41, 55, 96, 62],
 ];
 
 console.log(makeWork(arr, summElementsWorker)); // максимум из 61, 206, 328, 284 => 328
