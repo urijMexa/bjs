@@ -88,28 +88,28 @@ console.log(picknick.state); // 10
 picknick.fix();
 console.log(picknick.state); // 15
 
-
 class Library {
     constructor(name) {
-        this.name = name; // Название библиотеки
-        this.books = []; // Хранилище книг (пустой массив)
+        this.name = name;
+        this.books = [];
     }
 
     addBook(book) {
         if (book.state > 30) {
-            this.books.push(book); // Добавляем книгу, если её состояние > 30
+            this.books.push(book);
         }
     }
 
     findBookBy(type, value) {
         return this.books.find(book => book[type] === value) || null;
-        // Возвращаем найденную книгу или null, если книга не найдена
     }
 
     giveBookByName(bookName) {
-        const index = this.books.findIndex(book => book.name === bookName);
-        if (index !== -1) {
-            return this.books.splice(index, 1)[0];
+        const bookIndex = this.books.findIndex(book => book.name === bookName);
+        if (bookIndex !== -1) {
+            const book = this.books[bookIndex];
+            this.books.splice(bookIndex, 1);
+            return book;
         }
         return null;
     }
@@ -118,12 +118,12 @@ class Library {
 // Создаем библиотеку
 const library = new Library("Библиотека имени Ленина");
 
-// Добавляем книги и журналы
+// Добавляем книги в библиотеку
 library.addBook(
     new DetectiveBook(
-        "Артур Конан Дойл",
-        "Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе",
-        2019,
+        " В.Лункевич",
+        "Вода",
+        1919,
         1008
     )
 );
@@ -138,28 +138,25 @@ library.addBook(
 library.addBook(new NovelBook("Герберт Уэллс", "Машина времени", 1895, 138));
 library.addBook(new Magazine("Мурзилка", 1924, 60));
 
+// Поиск книги
+console.log(library.findBookBy("name", "Властелин колец")); // null
+console.log(library.findBookBy("releaseDate", 1924).name); // "Мурзилка"
 
-console.log(library.findBookBy("name", "Властелин колец"));
-console.log(library.findBookBy("releaseDate", 1924).name);
+// Выдача книги
+console.log("Количество книг до выдачи: " + library.books.length); // Количество книг до выдачи: 4
+const issuedBook = library.giveBookByName("Машина времени");
+console.log("Количество книг после выдачи: " + library.books.length); // Количество книг после выдачи: 3
 
+// Повреждение выданной книги
+if (issuedBook) {
+    issuedBook.state = 20;
+    console.log(`Состояние книги после повреждения: ${issuedBook.state}`); // Состояние книги после повреждения: 20
 
-console.log("Количество книг до выдачи: " + library.books.length);
+    // Восстановление книги
+    issuedBook.fix();
+    console.log(`Состояние книги после восстановления: ${issuedBook.state}`); // Состояние книги после восстановления: 30
 
-
-const givenBook = library.giveBookByName("Машина времени");
-console.log("Количество книг после выдачи: " + library.books.length);
-
-
-if (givenBook) {
-    givenBook.state = 20;
-    console.log("Состояние выданной книги: " + givenBook.state);
+    // Попытка добавить восстановленную книгу обратно в библиотеку
+    library.addBook(issuedBook);
+    console.log("Количество книг после попытки добавления: " + library.books.length); // Количество книг после попытки добавления: 3 (не добавится, так как state = 30)
 }
-
-if (givenBook) {
-    givenBook.fix();
-    console.log("Состояние восстановленной книги: " + givenBook.state);
-}
-
-
-library.addBook(givenBook);
-console.log("Количество книг после попытки добавления: " + library.books.length);
