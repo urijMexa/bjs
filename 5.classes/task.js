@@ -8,16 +8,10 @@ class PrintEditionItem {
     }
 
     fix() {
-        if (this.state > 0 && this.state < 100) {
-            this.state *= 1.5;
-        }
+        this.state *= 1.5;
         if (this.state > 100) {
             this.state = 100;
         }
-    }
-
-    get state() {
-        return this._state;
     }
 
     set state(newState) {
@@ -29,8 +23,11 @@ class PrintEditionItem {
             this._state = newState;
         }
     }
-}
 
+    get state() {
+        return this._state;
+    }
+}
 class Magazine extends PrintEditionItem {
     constructor(name, releaseDate, pagesCount) {
         super(name, releaseDate, pagesCount);
@@ -66,3 +63,27 @@ class DetectiveBook extends Book {
         this.type = "detective";
     }
 }
+
+const sherlock = new PrintEditionItem(
+    "Полное собрание повестей и рассказов о Шерлоке Холмсе в одном томе",
+    2019,
+    1008
+);
+
+console.log(sherlock.releaseDate); // 2019
+console.log(sherlock.state); // 100
+sherlock.fix();
+console.log(sherlock.state); // 100
+
+const picknick = new FantasticBook(
+    "Аркадий и Борис Стругацкие",
+    "Пикник на обочине",
+    1972,
+    168
+);
+
+console.log(picknick.author); // "Аркадий и Борис Стругацкие"
+picknick.state = 10;
+console.log(picknick.state); // 10
+picknick.fix();
+console.log(picknick.state); // 15
